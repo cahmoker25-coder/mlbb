@@ -1,3 +1,4 @@
+
 name: Build APK
 
 on:
@@ -9,6 +10,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
 
@@ -17,7 +19,10 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - uses: android-actions/setup-android@v3
+      - name: Setup Android SDK
+        run: |
+          yes | sdkmanager --licenses
+          sdkmanager "platform-tools" "platforms;android-35" "build-tools;35.0.0"
 
       - uses: gradle/actions/setup-gradle@v3
         with:
